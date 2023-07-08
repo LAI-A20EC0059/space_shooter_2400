@@ -20,21 +20,20 @@ class FireBase {
   }
 
   Future<String> getNameByID(String id) async {
-    late var value;
-    var docSnapshot = await db.doc('doc_id').get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      value = data?['name']; // <-- The value you want to retrieve.
-      // Call setState if needed.
-    }
-    return value;
+    late var user;
+    await db.doc(id).get().then((value){
+      user=value.data();
+    });
+    return user["name"];
   }
 
   void updateScore(int score) {
     //db.doc("get local id").set(score);
   }
 
-  //void getAccountByID(Account acc){
-  //  db.doc(Account.)
-  //}
+ Future<QuerySnapshot> getTopScores() {
+    return db.orderBy('score', descending: true)
+        .limit(10)
+        .get();
+  }
 }

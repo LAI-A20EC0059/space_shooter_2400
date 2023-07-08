@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:space_shooter_2400/models/firebase.dart';
 
-import '../models/account.dart';
 import 'select_spaceship.dart';
 import 'dart:async';
 import 'dart:io';
@@ -38,7 +36,7 @@ class IDStorage {
 
   Future<File> writeID(String id) async {
     final file = await _localFile;
-    return file.writeAsString('$id');
+    return file.writeAsString(id);
   }
 }
 
@@ -166,7 +164,7 @@ class _StatefulTextField extends State<CreateAccount> {
                             .then((String value) => saveIDToLocalDir(value));
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const SelectSpaceship(),
+                            builder: (context) => SelectSpaceship(username:_name),
                           ),
                         );
                       } else {

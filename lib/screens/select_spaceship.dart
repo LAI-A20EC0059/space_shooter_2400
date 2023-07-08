@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:space_shooter_2400/models/firebase.dart';
-import 'package:space_shooter_2400/screens/create_account.dart';
+import 'package:space_shooter_2400/screens/leaderboard_screen.dart';
 
 import '../models/player_data.dart';
 import '../models/spaceship_details.dart';
@@ -12,29 +11,9 @@ import 'main_menu.dart';
 
 // Represents the spaceship selection menu from where player can
 // change current spaceship or buy a new one.
-class SelectSpaceship extends StatefulWidget {
-  const SelectSpaceship({Key? key}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _SelectSpaceShip();
-}
-
-class _SelectSpaceShip extends State<SelectSpaceship>{
-  final FireBase fb=FireBase();
-  final IDStorage idStorage=IDStorage();
-  late String username;
-
-  @override
-  void initState() {
-    super.initState();
-    idStorage.readID().then((String value){
-      fb.getNameByID(value).then((String value){
-        setState(() {
-          username=value;
-        });
-      });
-    });
-  }
+class SelectSpaceship extends StatelessWidget {
+  final String username;
+  const SelectSpaceship({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,21 +22,23 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Game title.
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 50.0),
-              child: Text(
-                'Welcome Back',
-                style: TextStyle(
-                  fontSize: 50.0,
-                  color: Colors.black,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 20.0,
-                      color: Colors.white,
-                      offset: Offset(0, 0),
-                    )
-                  ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 45.0),
+                child: Text(
+                  'Welcome Back\n$username',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 50.0,
+                    color: Colors.black,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 20.0,
+                        color: Colors.white,
+                        offset: Offset(0, 0),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -150,7 +131,7 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
 
             // Start button.
             SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
+              width: MediaQuery.of(context).size.width / 2.5,
               child: ElevatedButton(
                 onPressed: () {
                   // Push and replace current screen (i.e MainMenu) with
@@ -165,25 +146,25 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
               ),
             ),
 
-             SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2.5,
               child: ElevatedButton(
                 onPressed: () {
                   // Push and replace current screen (i.e MainMenu) with
                   // GamePlay, because back press will be blocked by GamePlay.
-                  //Navigator.of(context).pushReplacement(
-                  //  //MaterialPageRoute(
-                  //  //  builder: (context) => const ScoreBoard(),
-                  //  //),
-                  //);
+                  Navigator.of(context).pushReplacement(
+                   MaterialPageRoute(
+                    builder: (context) => LeaderboardScreen(),
+                   ),
+                  );
                 },
-                child: const Text('Scoreboard'),
+                child: const Text('Leaderboard'),
               ),
             ),
 
             // Back button.
             SizedBox(
-              width: MediaQuery.of(context).size.width / 3,
+              width: MediaQuery.of(context).size.width / 2.5,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
@@ -200,6 +181,4 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
       ),
     );
   }
-  
-
 }

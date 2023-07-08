@@ -1,13 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:space_shooter_2400/screens/create_account.dart';
 
+import '../models/firebase.dart';
 import 'settings_menu.dart';
 import 'select_spaceship.dart';
 
 // Represents the main menu screen of Spacescape, allowing
 // players to start the game or modify in-game settings.
-class MainMenu extends StatelessWidget {
+class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
+
+  @override
+  State<MainMenu> createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> {
+  final FireBase fb = FireBase();
+  final IDStorage idStorage = IDStorage();
+  late String _username="";
+  bool newUser=false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    idStorage.readID()
+    .then((String value) {
+      fb.getNameByID(value).then((String username) {
+        setState(() {
+          _username = username;
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +66,7 @@ class MainMenu extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
                 onPressed: () {
-                  IDStorage storage = IDStorage();
-                  //storage.writeID("0");
-                  storage.readID().then((String value) {
-                    if (value==""||value=="0") {
+                    if (newUser) {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => CreateAccount(),
@@ -53,11 +75,10 @@ class MainMenu extends StatelessWidget {
                     } else {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                          builder: (context) => const SelectSpaceship(),
+                          builder: (context) => SelectSpaceship(username:_username),
                         ),
                       );
                     }
-                  });
                 },
                 child: const Text('Play'),
               ),
