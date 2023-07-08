@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:space_shooter_2400/models/settings.dart';
 
-// This class represents the settings menu.
 class SettingsMenu extends StatelessWidget {
   const SettingsMenu({Key? key}) : super(key: key);
 
@@ -13,7 +12,6 @@ class SettingsMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Game title.
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 50.0),
               child: Text(
@@ -32,7 +30,6 @@ class SettingsMenu extends StatelessWidget {
               ),
             ),
 
-            // Switch for sound effects.
             Selector<Settings, bool>(
               selector: (context, settings) => settings.soundEffects,
               builder: (context, value, child) {
@@ -47,7 +44,6 @@ class SettingsMenu extends StatelessWidget {
               },
             ),
 
-            // Switch for background music.
             Selector<Settings, bool>(
               selector: (context, settings) => settings.backgroundMusic,
               builder: (context, value, child) {
@@ -62,7 +58,6 @@ class SettingsMenu extends StatelessWidget {
               },
             ),
 
-            // Back button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 4,
               child: ElevatedButton(
