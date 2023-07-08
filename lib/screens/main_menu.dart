@@ -5,8 +5,6 @@ import '../models/firebase.dart';
 import 'settings_menu.dart';
 import 'select_spaceship.dart';
 
-// Represents the main menu screen of Spacescape, allowing
-// players to start the game or modify in-game settings.
 class MainMenu extends StatefulWidget {
   const MainMenu({Key? key}) : super(key: key);
 
@@ -41,7 +39,7 @@ class _MainMenuState extends State<MainMenu> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Game title.
+
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 50.0),
               child: Text(
@@ -61,7 +59,6 @@ class _MainMenuState extends State<MainMenu> {
               ),
             ),
 
-            // Play button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
@@ -84,7 +81,6 @@ class _MainMenuState extends State<MainMenu> {
               ),
             ),
 
-            // Settings button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(

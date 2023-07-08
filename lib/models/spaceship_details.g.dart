@@ -1,10 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'spaceship_details.dart';
-
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
 
 class SpaceshipTypeAdapter extends TypeAdapter<SpaceshipType> {
   @override

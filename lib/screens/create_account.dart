@@ -7,9 +7,6 @@ import 'select_spaceship.dart';
 import 'dart:async';
 import 'dart:io';
 
-// Represents the main menu screen of Spacescape, allowing
-// players to start the game or modify in-game settings.
-
 class IDStorage {
   Future<String> get _localPath async {
     final dir = await getApplicationDocumentsDirectory();
@@ -25,7 +22,6 @@ class IDStorage {
     try {
       final file = await _localFile;
 
-      // Read the file
       final contents = await file.readAsString();
 
       return contents;

@@ -1,10 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'player_data.dart';
-
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
 
 class PlayerDataAdapter extends TypeAdapter<PlayerData> {
   @override
