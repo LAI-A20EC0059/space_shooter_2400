@@ -21,7 +21,7 @@ class AudioPlayerComponent extends Component
         '9. Space Invaders.wav',
       );
     } catch (_) {
-      // ignore: avoid_print
+      
       print('Missing VOiD1 Gaming music pack: '
           'https://void1gaming.itch.io/free-synthwave-music-pack '
           'See assets/audio/README.md for more information.');
