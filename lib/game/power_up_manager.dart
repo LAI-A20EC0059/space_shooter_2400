@@ -9,30 +9,16 @@ import 'power_ups.dart';
 typedef PowerUpMap
     = Map<PowerUpTypes, PowerUp Function(Vector2 position, Vector2 size)>;
 
-// Represents the types of power up we have to offer.
 enum PowerUpTypes { health, freeze, nuke, multiFire }
 
-// This class/component is responsible for spawning random power ups
-// at random locations in the game world.
 class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
-  // Controls the frequency of spawning power ups.
   late Timer _spawnTimer;
-
-  // Controls the amount of time for which this component
-  /// should be freezed when [Freeze] power is activated.
   late Timer _freezeTimer;
-
-  // A random number generator.
   Random random = Random();
-
-  // Storing these static sprites so that
-  // they stay alive across multiple restarts.
   static late Sprite nukeSprite;
   static late Sprite healthSprite;
   static late Sprite freezeSprite;
   static late Sprite multiFireSprite;
-
-  // A private static map which stores a generator function for each power up.
   static final PowerUpMap _powerUpMap = {
     PowerUpTypes.health: (position, size) => Health(
           position: position,
@@ -53,18 +39,12 @@ class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
   };
 
   PowerUpManager() : super() {
-    // Makes sure that a new power up is spawned every 5 seconds.
     _spawnTimer = Timer(5, onTick: _spawnPowerUp, repeat: true);
-
-    // Restarts the spawn timer after 2 seconds are
-    // elapsed from start of freeze timer.
     _freezeTimer = Timer(2, onTick: () {
       _spawnTimer.start();
     });
   }
 
-  // This method is responsible for generating a
-  // random power up at random location on the screen.
   void _spawnPowerUp() {
     Vector2 initialSize = Vector2(64, 64);
     Vector2 position = Vector2(
@@ -72,26 +52,18 @@ class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
       random.nextDouble() * game.fixedResolution.y,
     );
 
-    // Clamp so that the power up does not
-    // go outside the screen.
     position.clamp(
       Vector2.zero() + initialSize / 2,
       game.fixedResolution - initialSize / 2,
     );
 
-    // Returns a random integer from 0 to (PowerUpTypes.values.length - 1).
     int randomIndex = random.nextInt(PowerUpTypes.values.length);
-
-    // Tried to get the generator function corresponding to selected random power.
     final fn = _powerUpMap[PowerUpTypes.values.elementAt(randomIndex)];
 
-    // If the generator function is valid call it and get the power up.
     var powerUp = fn?.call(position, initialSize);
 
-    // If power up is valid, set anchor to center.
     powerUp?.anchor = Anchor.center;
 
-    // If power up is valid, add it to game world.
     if (powerUp != null) {
       game.world.add(powerUp);
     }
@@ -99,7 +71,6 @@ class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
 
   @override
   void onMount() {
-    // Start the spawn timer as soon as this component is mounted.
     _spawnTimer.start();
 
     healthSprite = Sprite(game.images.fromCache('icon_plusSmall.png'));
@@ -112,7 +83,6 @@ class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
 
   @override
   void onRemove() {
-    // Stop the spawn timer as soon as this component is removed.
     _spawnTimer.stop();
     super.onRemove();
   }
@@ -124,19 +94,14 @@ class PowerUpManager extends Component with HasGameReference<SpaceShooterGame> {
     super.update(dt);
   }
 
-  // This method gets called when the game is being restarted.
   void reset() {
     // Stop all the timers.
     _spawnTimer.stop();
     _spawnTimer.start();
   }
 
-  // This method gets called when freeze power is activated.
   void freeze() {
-    // Stop the spawn timer.
     _spawnTimer.stop();
-
-    // Restart the freeze timer.
     _freezeTimer.stop();
     _freezeTimer.start();
   }
