@@ -4,7 +4,6 @@ import '../../game/game.dart';
 import '../../screens/main_menu.dart';
 import 'pause_button.dart';
 
-// This class represents the pause menu overlay.
 class PauseMenu extends StatelessWidget {
   static const String id = 'PauseMenu';
   final SpaceShooterGame game;
@@ -17,7 +16,6 @@ class PauseMenu extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Pause menu title.
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 50.0),
             child: Text(
@@ -35,8 +33,7 @@ class PauseMenu extends StatelessWidget {
               ),
             ),
           ),
-
-          // Resume button.
+          
           SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: ElevatedButton(
@@ -49,7 +46,6 @@ class PauseMenu extends StatelessWidget {
             ),
           ),
 
-          // Restart button.
           SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: ElevatedButton(
@@ -63,7 +59,6 @@ class PauseMenu extends StatelessWidget {
             ),
           ),
 
-          // Exit button.
           SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: ElevatedButton(
