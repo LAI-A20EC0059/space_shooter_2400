@@ -4,8 +4,6 @@ import 'package:space_shooter_2400/screens/create_account.dart';
 import 'settings_menu.dart';
 import 'select_spaceship.dart';
 
-// Represents the main menu screen of Spacescape, allowing
-// players to start the game or modify in-game settings.
 class MainMenu extends StatelessWidget {
   const MainMenu({Key? key}) : super(key: key);
 
@@ -16,7 +14,7 @@ class MainMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Game title.
+
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 50.0),
               child: Text(
@@ -36,7 +34,6 @@ class MainMenu extends StatelessWidget {
               ),
             ),
 
-            // Play button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
@@ -63,7 +60,6 @@ class MainMenu extends StatelessWidget {
               ),
             ),
 
-            // Settings button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
