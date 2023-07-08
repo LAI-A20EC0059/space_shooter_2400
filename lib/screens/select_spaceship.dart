@@ -10,8 +10,6 @@ import '../models/spaceship_details.dart';
 import 'game_play.dart';
 import 'main_menu.dart';
 
-// Represents the spaceship selection menu from where player can
-// change current spaceship or buy a new one.
 class SelectSpaceship extends StatefulWidget {
   const SelectSpaceship({Key? key}) : super(key: key);
 
@@ -111,8 +109,6 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
                                       if (canBuy) {
                                         playerData.buy(type);
                                       } else {
-                                        // Displays an alert if player
-                                        // does not have enough money.
                                         showDialog(
                                           context: context,
                                           builder: (context) {
@@ -148,13 +144,10 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
               ),
             ),
 
-            // Start button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
                 onPressed: () {
-                  // Push and replace current screen (i.e MainMenu) with
-                  // GamePlay, because back press will be blocked by GamePlay.
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const GamePlay(),
@@ -181,7 +174,6 @@ class _SelectSpaceShip extends State<SelectSpaceship>{
               ),
             ),
 
-            // Back button.
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
