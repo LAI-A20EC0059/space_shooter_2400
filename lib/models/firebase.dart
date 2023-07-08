@@ -25,7 +25,7 @@ class FireBase {
     if (docSnapshot.exists) {
       Map<String, dynamic>? data = docSnapshot.data();
       value = data?['name']; // <-- The value you want to retrieve.
-      // Call setState if needed.
+
     }
     return value;
   }
