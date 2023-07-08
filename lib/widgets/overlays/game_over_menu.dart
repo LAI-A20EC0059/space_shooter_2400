@@ -4,7 +4,6 @@ import '../../game/game.dart';
 import '../../screens/main_menu.dart';
 import 'pause_button.dart';
 
-// This class represents the game over menu overlay.
 class GameOverMenu extends StatelessWidget {
   static const String id = 'GameOverMenu';
   final SpaceShooterGame game;
@@ -36,7 +35,6 @@ class GameOverMenu extends StatelessWidget {
             ),
           ),
 
-          // Restart button.
           SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: ElevatedButton(
@@ -50,7 +48,6 @@ class GameOverMenu extends StatelessWidget {
             ),
           ),
 
-          // Exit button.
           SizedBox(
             width: MediaQuery.of(context).size.width / 3,
             child: ElevatedButton(
