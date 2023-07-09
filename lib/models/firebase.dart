@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../screens/create_account.dart';
 import 'account.dart';
 
 class FireBase {
   final db = FirebaseFirestore.instance.collection("account");
+  final IDStorage idStorage = IDStorage();
 
   void addAccountByName(String name) {
     Account acc = Account();
@@ -27,8 +29,9 @@ class FireBase {
     return user["name"];
   }
 
-  void updateScore(int score) {
-    //db.doc("get local id").set(score);
+  void updateScore(String id,int score) {
+    final data={"score":score};
+    db.doc(id).set(data,SetOptions(merge: true));
   }
 
  Future<QuerySnapshot> getTopScores() {

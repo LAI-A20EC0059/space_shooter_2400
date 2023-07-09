@@ -5,7 +5,9 @@ import 'package:flame/sprite.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:space_shooter_2400/screens/create_account.dart';
 
+import '../models/firebase.dart';
 import '../widgets/overlays/pause_menu.dart';
 import '../widgets/overlays/pause_button.dart';
 import '../widgets/overlays/game_over_menu.dart';
@@ -40,6 +42,10 @@ class SpaceShooterGame extends FlameGame
   bool _isAlreadyLoaded = false;
   Vector2 fixedResolution = Vector2(540, 960);
 
+  final FireBase fb = FireBase();
+  IDStorage idStorage = IDStorage();
+  late final userID;
+
   @override
   Future<void> onLoad() async {
     if (!_isAlreadyLoaded) {
@@ -61,14 +67,14 @@ class SpaceShooterGame extends FlameGame
       joystick = JoystickComponent(
         anchor: Anchor.bottomLeft,
         //position: Vector2(30, fixedResolution.y - 30),
-        margin:  const EdgeInsets.only(left: 20, bottom: 20),
+        margin: const EdgeInsets.only(left: 20, bottom: 20),
         background: CircleComponent(
           radius: 60,
           paint: Paint()..color = Colors.white.withOpacity(0.5),
         ),
         knob: CircleComponent(radius: 30),
       );
-   
+
       primaryCamera = CameraComponent.withFixedResolution(
         world: world,
         width: fixedResolution.x,
@@ -76,7 +82,7 @@ class SpaceShooterGame extends FlameGame
         hudComponents: [joystick],
       )..viewfinder.position = fixedResolution / 2;
       await add(primaryCamera);
-      
+
       _audioPlayerComponent = AudioPlayerComponent();
       final stars = await ParallaxComponent.load(
         [ParallaxImageData('stars1.png'), ParallaxImageData('stars2.png')],
@@ -158,6 +164,7 @@ class SpaceShooterGame extends FlameGame
 
       _isAlreadyLoaded = true;
     }
+    idStorage.readID().then((value) => userID = value);
   }
 
   Player get newMethod => _player;
@@ -197,10 +204,11 @@ class SpaceShooterGame extends FlameGame
 
       if (_player.health <= 0) {
         pauseEngine();
+        fb.updateScore(userID, _player.score);
         overlays.remove(PauseButton.id);
         overlays.add(GameOverMenu.id);
       }
-    }
+    } 
   }
 
   @override
