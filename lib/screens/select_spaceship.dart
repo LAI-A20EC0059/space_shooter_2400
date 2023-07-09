@@ -147,7 +147,7 @@ class SelectSpaceship extends StatelessWidget {
                   // GamePlay, because back press will be blocked by GamePlay.
                   Navigator.of(context).pushReplacement(
                    MaterialPageRoute(
-                    builder: (context) => LeaderboardScreen(),
+                    builder: (context) => const LeaderboardScreen(),
                    ),
                   );
                 },

@@ -15,20 +15,21 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   final FireBase fb = FireBase();
   final IDStorage idStorage = IDStorage();
-  late String _username="";
-  bool newUser=false;
-
+  late String _username = "";
+  bool newUser = true;
 
   @override
   void initState() {
     super.initState();
-    idStorage.readID()
-    .then((String value) {
-      fb.getNameByID(value).then((String username) {
-        setState(() {
-          _username = username;
+    idStorage.readID().then((String value) {
+      if (value != "") {
+        fb.getNameByID(value).then((String username) {
+          setState(() {
+            _username = username;
+            newUser = false;
+          });
         });
-      });
+      }
     });
   }
 
@@ -39,7 +40,6 @@ class _MainMenuState extends State<MainMenu> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 50.0),
               child: Text(
@@ -58,29 +58,28 @@ class _MainMenuState extends State<MainMenu> {
                 ),
               ),
             ),
-
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(
                 onPressed: () {
-                    if (newUser) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => CreateAccount(),
-                        ),
-                      );
-                    } else {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => SelectSpaceship(username:_username),
-                        ),
-                      );
-                    }
+                  if (newUser) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => CreateAccount(),
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            SelectSpaceship(username: _username),
+                      ),
+                    );
+                  }
                 },
                 child: const Text('Play'),
               ),
             ),
-
             SizedBox(
               width: MediaQuery.of(context).size.width / 3,
               child: ElevatedButton(

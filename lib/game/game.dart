@@ -44,10 +44,11 @@ class SpaceShooterGame extends FlameGame
 
   final FireBase fb = FireBase();
   IDStorage idStorage = IDStorage();
-  late final userID;
+  late String userID;
 
   @override
   Future<void> onLoad() async {
+    await super.onLoad();
     if (!_isAlreadyLoaded) {
       await images.loadAll([
         'simpleSpace_tilesheet@2.png',
@@ -162,9 +163,9 @@ class SpaceShooterGame extends FlameGame
         healthBar,
       ]);
 
-      _isAlreadyLoaded = true;
-    }
+      _isAlreadyLoaded = false;
     idStorage.readID().then((value) => userID = value);
+    }
   }
 
   Player get newMethod => _player;
